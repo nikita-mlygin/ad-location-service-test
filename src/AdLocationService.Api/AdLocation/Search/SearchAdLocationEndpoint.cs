@@ -1,11 +1,13 @@
 using AdLocationService.Domain.AdLocation;
 using AdLocationService.Domain.AdLocation.Repository;
 using FastEndpoints;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdLocationService.Api.AdLocation.Search;
 
 public class SearchTrieRequest
 {
+    [QueryParam]
     public string Path { get; set; } = "";
 }
 
@@ -24,6 +26,7 @@ public class SearchTrieEndpoint(ITrieRepository repo)
     {
         Get("/trie/search");
         AllowAnonymous();
+        Description(b => b.Accepts<SearchTrieRequest>());
     }
 
     public override async Task HandleAsync(SearchTrieRequest req, CancellationToken ct)
